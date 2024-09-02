@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SDL PONG!</title>
+</head>
+<body>
+	<button id="load-game">LOAD GAME!</button>
+	<canvas id="canvas" width="1280" height="720"></canvas>
+	<div id="output"></div>
+	<script>
+		//	Prepare module object
+		var Module = {
+			preRun: [],
+			postRun: [],
+			print: (function() {
+				var element = document.getElementById('output');
+				if (element) element.value = ''; // clear browser cache
+				return function(text) {
+					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+					console.log(text);
+				};
+			})(),
+			canvas: (function() {
+				var canvas = document.getElementById('canvas');
+				return canvas;
+			})()
+		};
+
+		//	Handle Start Game button
+		document
+			.getElementById('load-game')
+			.addEventListener('click', (event) => {
+				const gameScript = document.createElement('script');
+				gameScript.src = "build.js";
+				document.body.appendChild(gameScript);
+				document.getElementById('load-game').style.display = 'none';
+			});
+	</script>
+	<!--<script src="build.js"></script>-->
+</body>
+</html>
